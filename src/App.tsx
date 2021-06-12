@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Redirect, Switch, Route, Link } from 'react-router-dom'
-import './App.less';
+import './App.less'
 
 import { Layout, Menu } from 'antd'
 
@@ -15,7 +15,7 @@ import STIcon from '@ant-design/icons/YoutubeFilled'
 import RadikoIcon from '@ant-design/icons/TrademarkCircleFilled'
 
 const { Header, Footer, Content } = Layout
-const version: string = "v20210612"
+const version: string = "v20210613"
 
 export default function App() {
   const [title, setTitle] = useState<string>("Picture")
