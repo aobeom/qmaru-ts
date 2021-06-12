@@ -15,7 +15,7 @@ import STIcon from '@ant-design/icons/YoutubeFilled'
 import RadikoIcon from '@ant-design/icons/TrademarkCircleFilled'
 
 const { Header, Footer, Content } = Layout
-const version: string = "v20210611-beta"
+const version: string = "v20210612"
 
 export default function App() {
   const [title, setTitle] = useState<string>("Picture")
@@ -54,7 +54,7 @@ export default function App() {
       <Layout className='app-wrapper'>
         <Header className='app-header'>
           <div className='app-header-details'>
-            <p>Qmaru / {version} / {title}</p>
+            <p>Qmaru - {version} / {title}</p>
           </div>
 
         </Header>

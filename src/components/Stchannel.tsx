@@ -87,7 +87,7 @@ export default function Stchannel() {
                   rel="noreferrer"
                   download
                 >
-                  Download
+                  OPEN
                 </Button>
               ]}
             >
@@ -103,7 +103,7 @@ export default function Stchannel() {
     <div>
       <div className='st-countdown'>
         <Statistic
-          title="Update"
+          title="UPDATE"
           value={updateTime}
           valueStyle={{ fontSize: 18 }}
         />

@@ -172,7 +172,7 @@ export default function Drama() {
       const dData: any = dEntities[i]
       const dUrls: any = dData.dlurls
       dramaShow.push(
-        <Panel header={dData.title} key={String(i + 1)}>
+        <Panel header={dData.title} key={dSite + i}>
           <Eps site={dSite} eps={dUrls} />
         </Panel>
 
