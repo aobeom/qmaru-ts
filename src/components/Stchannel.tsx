@@ -16,7 +16,7 @@ export default function Stchannel() {
   const STLoading = () => {
     return (
       <Card
-        style={{ width: 200, maxWidth: 600, marginTop: 16, margin: "0 auto" }}
+        style={{ width: "100%", maxWidth: 600, marginTop: 16, margin: "0 auto" }}
       >
         <Skeleton active>
           <Meta
