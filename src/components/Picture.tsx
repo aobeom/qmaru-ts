@@ -113,7 +113,7 @@ export default function Picture() {
                   />
                 }
               >
-                <img src={url} alt="" className='picture-result-img' />
+                <img src={url} alt="" className='picture-result-img' crossOrigin='anonymous'/>
               </LazyLoad>
             </div>
           )
