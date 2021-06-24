@@ -28,6 +28,7 @@ export default function Picture() {
   const [mediaData, setMediaData] = useState<any>([])
   const [mediaStatus, setMediaStatus] = useState<boolean>(false)
   const [searchLoading, setSearchLoading] = useState<boolean>(false)
+  const [isIG, setIsIG] = useState<boolean>(false)
 
   const MediaURLChange = (e: any) => {
     setMediaURL(e.target.value)
@@ -51,6 +52,9 @@ export default function Picture() {
         mediaType = "/twitter"
       } else {
         mediaType = "/news"
+        if (mediaURL.indexOf("instagram") !== -1) {
+          setIsIG(true)
+        }
       }
     }
 
@@ -101,20 +105,31 @@ export default function Picture() {
         } else {
           mediaShow.push(
             <div key={"img" + i}>
-              <LazyLoad
-                height={200}
-                offset={[-200, 0]}
-                once
-                scrollContainer=".app-content"
-                placeholder={
-                  <Skeleton.Button
-                    active
-                    style={{ width: "60vw", height: "40vw", margin: "5px auto" }}
-                  />
-                }
+              {isIG ? <div className='picture-result-ig'><Button
+                type="primary"
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                download
               >
-                <img src={url} alt="" className='picture-result-img' crossOrigin='anonymous'/>
-              </LazyLoad>
+                IG Can Not Preview {Number(i) + 1}
+              </Button>
+              </div>
+                :
+                <LazyLoad
+                  height={200}
+                  offset={[-200, 0]}
+                  once
+                  scrollContainer=".app-content"
+                  placeholder={
+                    <Skeleton.Button
+                      active
+                      style={{ width: "60vw", height: "40vw", margin: "5px auto" }}
+                    />
+                  }
+                >
+                  <img src={url} alt="" className='picture-result-img' />
+                </LazyLoad>}
             </div>
           )
         }
@@ -131,7 +146,7 @@ export default function Picture() {
           download
         >
           Download
-      </Button>
+        </Button>
       )
     }
     if (mediaType === "twitter") {
