@@ -53,10 +53,13 @@ export default function Picture() {
         mediaType = "/twitter"
       } else {
         mediaType = "/news"
-        if (mediaURL.indexOf("instagram") !== -1) {
-          setIsIG(true)
-        }
       }
+    }
+
+    if (mediaURL.indexOf("instagram") !== -1) {
+      setIsIG(true)
+    } else {
+      setIsIG(false)
     }
 
     let mediaURLClear: string[] = mediaURL.split(" ")
