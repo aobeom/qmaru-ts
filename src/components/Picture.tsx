@@ -35,6 +35,7 @@ export default function Picture() {
   }
 
   const MeidaFetch = () => {
+    setMediaData([])
     let mediaType: string = ""
     if (mediaURL === "") {
       window.Message(msgCode["url"])
