@@ -103,21 +103,34 @@ export default function Picture() {
         if (url.indexOf(".mp4") > 0) {
           mediaShow.push(
             <div key={"img" + i}>
-              <video src={url} controls />
+              {isIG ? <div className='picture-result-ig'>
+                <Button
+                  type="primary"
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  download
+                >
+                  IG Can Not Preview {Number(i) + 1}
+                </Button>
+              </div>
+                :
+                <video src={url} controls />}
             </div>
           )
         } else {
           mediaShow.push(
             <div key={"img" + i}>
-              {isIG ? <div className='picture-result-ig'><Button
-                type="primary"
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                download
-              >
-                IG Can Not Preview {Number(i) + 1}
-              </Button>
+              {isIG ? <div className='picture-result-ig'>
+                <Button
+                  type="primary"
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  download
+                >
+                  IG Can Not Preview {Number(i) + 1}
+                </Button>
               </div>
                 :
                 <LazyLoad
