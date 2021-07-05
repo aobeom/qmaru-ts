@@ -81,7 +81,7 @@ export default function Drama() {
     if (site === "tvbt") {
       return (
         <div>
-          {urls.map((ep: any) => {
+          {urls === null ? <Button>No Data</Button> : urls.map((ep: any) => {
             return <Button
               key={site + ep.ep}
               type="primary"
@@ -99,7 +99,7 @@ export default function Drama() {
     } else if (site === "subpig") {
       return (
         <div className="drama-subpig">
-          {urls.map((ep: any) => {
+          {urls === null ? <Button>No Data</Button> : urls.map((ep: any) => {
             return <Button
               key={site + ep.ep}
               type="primary"
@@ -117,7 +117,7 @@ export default function Drama() {
     } else if (site === "fixsub") {
       return (
         <div>
-          {urls.map((ep: any) => {
+          {urls === null ? <Button>No Data</Button> : urls.map((ep: any) => {
             const urlArray: string[] = ep.url.split(",")
             return <div key={site + ep.ep} className="drama-fixsub">
               <p style={{ margin: 0 }}>{'EP' + ep.ep}</p>
