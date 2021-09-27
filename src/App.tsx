@@ -15,7 +15,7 @@ import STIcon from '@ant-design/icons/YoutubeFilled'
 import RadikoIcon from '@ant-design/icons/TrademarkCircleFilled'
 
 const { Header, Footer, Content } = Layout
-const version: string = "v20210624-2"
+const version: string = "v20210927-1"
 
 export default function App() {
   const [title, setTitle] = useState<string>("Picture")
@@ -91,8 +91,7 @@ export default function App() {
             })}
           </Menu>
         </Footer>
-
       </Layout>
-    </BrowserRouter >
+    </BrowserRouter>
   )
 }
