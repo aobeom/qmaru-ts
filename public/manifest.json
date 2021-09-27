@@ -21,13 +21,13 @@
   ],
   "ios": {
     "apple-mobile-web-app-title": "Qmaru",
-    "apple-mobile-web-app-status-bar-style": "#9604ba",
+    "apple-mobile-web-app-status-bar-style": "#1d1529",
     "apple-mobile-web-app-capable": "yes",
     "apple-touch-icon": "./favicon.png"
   },
   "scope": "/",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#9604ba",
-  "background_color": "#FCFCFC"
+  "theme_color": "#1d1529",
+  "background_color": "#000000"
 }
