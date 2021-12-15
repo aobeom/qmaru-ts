@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter, Redirect, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Navigate, Routes, Route, Link } from 'react-router-dom'
 import './App.less'
 
 import { Layout, Menu } from 'antd'
@@ -15,7 +15,7 @@ import STIcon from '@ant-design/icons/YoutubeFilled'
 import RadikoIcon from '@ant-design/icons/TrademarkCircleFilled'
 
 const { Header, Footer, Content } = Layout
-const version: string = "v20210927-1"
+const version: string = "20211215"
 
 export default function App() {
   const [title, setTitle] = useState<string>("Picture")
@@ -29,6 +29,7 @@ export default function App() {
   ]
   type Router = { path: string; Component: () => JSX.Element }
   const routers: Router[] = [
+    { path: "/", Component: () => <Navigate to="/picture" /> },
     { path: "/picture", Component: Picture },
     { path: "/drama", Component: Drama },
     { path: "/stchannel", Component: Stchannel },
@@ -60,18 +61,17 @@ export default function App() {
         </Header>
 
         <Content className='app-content'>
-          <Switch>
+          <Routes>
             {routers.map(({ path, Component }) => (
               <Route
                 key={path}
                 path={path}
-                exact
+                element={<Component />}
               >
-                <Component />
               </Route>
             ))}
-            <Redirect from="/" to="/picture" />
-          </Switch>
+            {/* <Route path="/" element={<Navigate to="/picture" />} /> */}
+          </Routes>
         </Content>
 
         <Footer className='app-footer'>
