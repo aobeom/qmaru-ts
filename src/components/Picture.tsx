@@ -21,8 +21,6 @@ export default function Picture() {
     { source: LINEBLOG, alt: "lineblog" },
     { source: THETV, alt: "thetv" },
   ]
-  let msgCode: any = new Map()
-  msgCode["url"] = "URL ERROR / NO RESULT FOUND"
 
   const [mediaURL, setMediaURL] = useState<string>("")
   const [mediaData, setMediaData] = useState<any>([])
@@ -34,37 +32,42 @@ export default function Picture() {
     setMediaURL(e.target.value)
   }
 
-  const MeidaFetch = () => {
+  const MeidaFetch = (shareURL: string) => {
     setMediaData([])
+    let fetchURL: string = mediaURL
+    if (shareURL !== "") {
+      fetchURL = shareURL
+    }
+
     let mediaType: string = ""
-    if (mediaURL === "") {
-      window.Message(msgCode["url"])
+    if (fetchURL === "") {
+      window.Message("URL ERROR / NO RESULT FOUND")
       return false
     }
 
     var regex: any = /http(s)?:\/\/([\w-]+.)+[\w-]+(\/[\w- ./?%&=]*)?/
-    if (!regex.test(mediaURL)) {
-      window.Message(msgCode["url"])
+    if (!regex.test(fetchURL)) {
+      window.Message("URL ERROR / NO RESULT FOUND")
       return false
     } else {
-      if (mediaURL.indexOf("youtube.com") !== -1 || mediaURL.indexOf("youtu.be") !== -1) {
+      if (fetchURL.indexOf("youtube.com") !== -1 || fetchURL.indexOf("youtu.be") !== -1) {
         mediaType = "/y2b"
-      } else if (mediaURL.indexOf("twitter") !== -1) {
+      } else if (fetchURL.indexOf("twitter") !== -1) {
         mediaType = "/twitter"
       } else {
         mediaType = "/news"
       }
     }
 
-    if (mediaURL.indexOf("instagram") !== -1) {
+    if (fetchURL.indexOf("instagram") !== -1) {
       setIsIG(true)
     } else {
       setIsIG(false)
     }
 
-    let mediaURLClear: string[] = mediaURL.split(" ")
-    let mediaURLNew: string = mediaURLClear[mediaURLClear.length - 1]
-    let requestURL: string = `${window.api}/api/v1/media${mediaType}?url=${encodeURIComponent(mediaURLNew)}`
+    let fetchURLClear: string[] = fetchURL.split(" ")
+    let fetchURLNew: string = fetchURLClear[fetchURLClear.length - 1]
+    let requestURL: string = `${window.api}/api/v1/media${mediaType}?url=${encodeURIComponent(fetchURLNew)}`
     setSearchLoading(true)
 
     fetch(
@@ -92,6 +95,26 @@ export default function Picture() {
         }
       )
   }
+
+  const ShareDataFilter = (text: string) => {
+    return text.replace(/\r\n/g,"").replace(/\n/g,"")
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const url: any = new URL(window.location.toString());
+    const sharedTitle: string = url.searchParams.get('title');
+    const sharedText: string = url.searchParams.get('text');
+    const sharedUrl: string = url.searchParams.get('url');
+
+    var regex: any = /http(s)?:\/\/([\w-]+.)+[\w-]+(\/[\w- ./?%&=]*)?/
+    if (regex.test(sharedTitle)) {
+      MeidaFetch(ShareDataFilter(sharedTitle))
+    } else if (regex.test(sharedText)) {
+      MeidaFetch(ShareDataFilter(sharedText))
+    } else if (regex.test(sharedUrl)) {
+      MeidaFetch(ShareDataFilter(sharedUrl))
+    }
+  })
 
   let mediaShow: any = []
   if (mediaStatus) {
@@ -193,7 +216,7 @@ export default function Picture() {
           style={{ maxWidth: 230 }}
           loading={searchLoading}
           onChange={(e) => MediaURLChange(e)}
-          onSearch={() => MeidaFetch()}
+          onSearch={() => MeidaFetch("")}
         />
       </div>
 
