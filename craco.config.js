@@ -8,9 +8,9 @@ module.exports = {
         lessLoaderOptions: {
           lessOptions: {
             modifyVars: {
-              '@primary-color': '#613d8e',
-              '@text-color': '#b6abbf', // 主文本色
-              '@text-color-secondary': '#7e5ea1', // 次文本色
+              '@primary-color': '#3C2F41',
+              '@text-color': '#986DB2', // 主文本色
+              '@text-color-secondary': '#B28FCE', // 次文本色
             },
             javascriptEnabled: true,
           },
