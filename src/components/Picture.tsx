@@ -8,7 +8,7 @@ import LazyLoad from 'react-lazyload'
 const { Search } = Input
 
 export default function Picture() {
-  const [mediaAlive, setMediaAlive] = useState<any>([{ "name": "ServerError", "status": "0" }])
+  const [mediaAlive, setMediaAlive] = useState<any>([{ "name": "Check Server", "status": "processing" }])
   const [mediaURL, setMediaURL] = useState<string>("")
   const [mediaData, setMediaData] = useState<any>([])
   const [mediaStatus, setMediaStatus] = useState<boolean>(false)
@@ -28,7 +28,19 @@ export default function Picture() {
         let status: number = data.status
         if (status === 0) {
           let rawData: any = data.data
-          setMediaAlive(rawData)
+          let aliveData: any = []
+          for (let i = 0; i < rawData.length; i++) {
+            let data: any = rawData[i]
+            let status: string = "success"
+            if (data["status"] === "0") {
+              status = "error"
+            }
+            aliveData.push({
+              "name": data["name"],
+              "status": status
+            })
+          }
+          setMediaAlive(aliveData)
         }
       })
       .catch(
@@ -215,7 +227,7 @@ export default function Picture() {
         <Row justify="start">
           {mediaAlive.map((media: any, index: number) => {
             return <Col key={"media" + index} className="picture-status">
-              <Badge status={media.status === "1" ? 'success' : 'error'} text={media.name} />
+              <Badge status={media.status} text={media.name} />
             </Col>
           })}
         </Row>
