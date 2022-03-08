@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 import './Picture.less'
 import '../global.ts'
 
-import { Row, Col, Badge, Input, Skeleton, Button } from 'antd'
+import { Row, Col, Divider, Badge, Input, Skeleton, Button } from 'antd'
 import LazyLoad from 'react-lazyload'
 
 const { Search } = Input
@@ -224,6 +224,15 @@ export default function Picture() {
     <div>
 
       <div className='picture-top'>
+        <Row>
+          <Col className="picture-status">
+            <Badge status={"success"} text={"Available"} />
+          </Col>
+          <Col className="picture-status">
+            <Badge status={"error"} text={"Repair"} />
+          </Col>
+        </Row>
+        <Divider orientation="center">System Status</Divider>
         <Row justify="start">
           {mediaAlive.map((media: any, index: number) => {
             return <Col key={"media" + index} className="picture-status">
