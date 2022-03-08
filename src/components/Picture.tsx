@@ -227,7 +227,7 @@ export default function Picture() {
         <Row justify="start">
           {mediaAlive.map((media: any, index: number) => {
             return <Col key={"media" + index} className="picture-status">
-              <Badge status={media.status} text={media.name} />
+              <Badge status={media.status} text={media.name.toUpperCase()} />
             </Col>
           })}
         </Row>
