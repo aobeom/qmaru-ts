@@ -1,27 +1,14 @@
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import './Picture.less'
 import '../global.ts'
 
-import { Input, Skeleton, Button } from 'antd'
+import { Row, Col, Badge, Input, Skeleton, Button } from 'antd'
 import LazyLoad from 'react-lazyload'
-
-import MDPR from '../static/img/mdpr.png'
-import DESSART from '../static/img/dessart.png'
-import AMEBLO from '../static/img/ameblo.png'
-import LINEBLOG from '../static/img/lineblog.png'
-import THETV from '../static/img/thetv.png'
 
 const { Search } = Input
 
 export default function Picture() {
-  const logos: any = [
-    { source: MDPR, alt: "mdpr" },
-    { source: DESSART, alt: "dessart" },
-    { source: AMEBLO, alt: "ameblo" },
-    { source: LINEBLOG, alt: "lineblog" },
-    { source: THETV, alt: "thetv" },
-  ]
-
+  const [mediaAlive, setMediaAlive] = useState<any>([{ "name": "ServerError", "status": "0" }])
   const [mediaURL, setMediaURL] = useState<string>("")
   const [mediaData, setMediaData] = useState<any>([])
   const [mediaStatus, setMediaStatus] = useState<boolean>(false)
@@ -31,6 +18,28 @@ export default function Picture() {
   const MediaURLChange = (e: any) => {
     setMediaURL(e.target.value)
   }
+
+  const PicStatus = useCallback(() => {
+    const requesURL: string = `${window.api}/api/v1/media/status`
+    fetch(requesURL, {
+      method: 'GET',
+    }).then(res => res.json())
+      .then(data => {
+        let status: number = data.status
+        if (status === 0) {
+          let rawData: any = data.data
+          setMediaAlive(rawData)
+        }
+      })
+      .catch(
+        () => { }
+      )
+    return () => { }
+  }, [])
+
+  useEffect(() => {
+    PicStatus()
+  }, [PicStatus])
 
   const MeidaFetch = (shareURL: string) => {
     setMediaData([])
@@ -97,7 +106,7 @@ export default function Picture() {
   }
 
   const ShareDataFilter = (text: string) => {
-    return text.replace(/\r\n/g,"").replace(/\n/g,"")
+    return text.replace(/\r\n/g, "").replace(/\n/g, "")
   }
 
   window.addEventListener('DOMContentLoaded', () => {
@@ -202,12 +211,14 @@ export default function Picture() {
   return (
     <div>
 
-      <div className='picture-logos'>
-        {logos.map((logo: any, index: number) => {
-          return <div key={logo + index} >
-            <img className="picture-logo" src={logo.source} alt={logo.alt}></img>
-          </div>
-        })}
+      <div className='picture-top'>
+        <Row justify="start">
+          {mediaAlive.map((media: any, index: number) => {
+            return <Col key={"media" + index} className="picture-status">
+              <Badge status={media.status === "1" ? 'success' : 'error'} text={media.name} />
+            </Col>
+          })}
+        </Row>
       </div>
 
       <div className='picture-search'>
