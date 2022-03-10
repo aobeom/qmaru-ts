@@ -224,18 +224,18 @@ export default function Picture() {
     <div>
 
       <div className='picture-top'>
-        <Row>
-          <Col className="picture-status">
+        <Row className='picture-tag'>
+          <Col span={12}>
             <Badge status={"success"} text={"Available"} />
           </Col>
-          <Col className="picture-status">
-            <Badge status={"error"} text={"Repair"} />
+          <Col span={12}>
+            <Badge status={"error"} text={"Outage"} />
           </Col>
         </Row>
-        <Divider orientation="center">System Status</Divider>
-        <Row justify="start">
+        <Divider orientation="center" plain><strong>System Status</strong></Divider>
+        <Row>
           {mediaAlive.map((media: any, index: number) => {
-            return <Col key={"media" + index} className="picture-status">
+            return <Col key={"media" + index} className="picture-status" span={8} offset={4}>
               <Badge status={media.status} text={media.name.toUpperCase()} />
             </Col>
           })}
