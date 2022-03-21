@@ -7,12 +7,10 @@ import { Layout, Menu } from 'antd'
 import Picture from './components/Picture'
 import Drama from './components/Drama'
 import Stchannel from './components/Stchannel'
-import Radiko from './components/Radiko'
 
 import PicIcon from '@ant-design/icons/PictureFilled'
 import DramaIcon from '@ant-design/icons/VideoCameraFilled'
 import STIcon from '@ant-design/icons/YoutubeFilled'
-import RadikoIcon from '@ant-design/icons/TrademarkCircleFilled'
 
 const { Header, Footer, Content } = Layout
 const version: string = "20220321"
