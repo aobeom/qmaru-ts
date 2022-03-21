@@ -10,7 +10,6 @@ const { Panel } = Collapse
 export default function Drama() {
   const buttonGroup: any = [
     { name: "TVBT", value: "tvbt" },
-    { name: "FIXSUB", value: "fixsub" },
   ]
 
   const [dramaStatus, setDramaStatus] = useState<boolean>(false)
@@ -92,47 +91,6 @@ export default function Drama() {
             >
               {'EP' + ep.ep}
             </Button>
-          })}
-        </div>
-      )
-    } else if (site === "fixsub") {
-      return (
-        <div>
-          {urls === null ? <Button>No Data</Button> : urls.map((ep: any) => {
-            const urlArray: string[] = ep.url.split(",")
-            return <div key={site + ep.ep} className="drama-fixsub">
-              <p style={{ margin: 0 }}>{'EP' + ep.ep}</p>
-              <Button
-                type="primary"
-                href={urlArray[0]}
-                target="_blank"
-                rel="noreferrer"
-                download
-                className="drama-eps"
-              >
-                BD
-              </Button>
-              <Button
-                type="primary"
-                href={urlArray[1]}
-                target="_blank"
-                rel="noreferrer"
-                download
-                className="drama-eps"
-              >
-                MG
-              </Button>
-              <Button
-                type="primary"
-                href={urlArray[2]}
-                target="_blank"
-                rel="noreferrer"
-                download
-                className="drama-eps"
-              >
-                E2K
-              </Button>
-            </div>
           })}
         </div>
       )
