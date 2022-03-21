@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import './Drama.less'
 import '../global.ts'
 
-import { Space, Button, Statistic, Collapse } from 'antd'
+import { LinkOutlined } from '@ant-design/icons'
+import { Badge, Space, Button, Statistic, Collapse } from 'antd'
 
 const { Countdown } = Statistic
 const { Panel } = Collapse
@@ -110,8 +111,18 @@ export default function Drama() {
     for (let i in dEntities) {
       const dData: any = dEntities[i]
       const dUrls: any = dData.dlurls
+      const dTitle: string = dData.title
+      const dUrl: string = dData.url
+      const dDate: string = dData.date
       dramaShow.push(
-        <Panel header={dData.title} key={dSite + i}>
+        <Panel header={
+          <div>
+            <span>
+              {dDate}&nbsp;|&nbsp;<a href={dUrl} target="_blank" rel="noreferrer">{dTitle}</a>
+              <Badge count={<LinkOutlined />} offset={[2, -2]} />
+            </span>
+          </div>
+        } key={dSite + i}>
           <Eps site={dSite} eps={dUrls} />
         </Panel>
 
