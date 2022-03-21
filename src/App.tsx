@@ -15,7 +15,7 @@ import STIcon from '@ant-design/icons/YoutubeFilled'
 import RadikoIcon from '@ant-design/icons/TrademarkCircleFilled'
 
 const { Header, Footer, Content } = Layout
-const version: string = "20220310"
+const version: string = "20220321"
 
 export default function App() {
   const [title, setTitle] = useState<string>("Picture")
@@ -23,17 +23,15 @@ export default function App() {
 
   const menus: any = [
     { link: "/picture", icon: <PicIcon style={{ fontSize: "150%" }} /> },
-    { link: "/drama", icon: <DramaIcon style={{ fontSize: "150%" }} /> },
     { link: "/stchannel", icon: <STIcon style={{ fontSize: "150%" }} /> },
-    { link: "/radiko", icon: <RadikoIcon style={{ fontSize: "150%" }} /> },
+    { link: "/drama", icon: <DramaIcon style={{ fontSize: "150%" }} /> },
   ]
   type Router = { path: string; Component: () => JSX.Element }
   const routers: Router[] = [
     { path: "/", Component: () => <Navigate to="/picture" /> },
     { path: "/picture", Component: Picture },
-    { path: "/drama", Component: Drama },
     { path: "/stchannel", Component: Stchannel },
-    { path: "/radiko", Component: Radiko },
+    { path: "/drama", Component: Drama },
   ]
 
   const menuClick = (e: any) => {

@@ -10,7 +10,6 @@ const { Panel } = Collapse
 export default function Drama() {
   const buttonGroup: any = [
     { name: "TVBT", value: "tvbt" },
-    { name: "SUBPIG", value: "subpig" },
     { name: "FIXSUB", value: "fixsub" },
   ]
 
@@ -92,24 +91,6 @@ export default function Drama() {
               className="drama-eps"
             >
               {'EP' + ep.ep}
-            </Button>
-          })}
-        </div>
-      )
-    } else if (site === "subpig") {
-      return (
-        <div className="drama-subpig">
-          {urls === null ? <Button>No Data</Button> : urls.map((ep: any) => {
-            return <Button
-              key={site + ep.ep}
-              type="primary"
-              href={ep.url}
-              target="_blank"
-              rel="noreferrer"
-              download
-              className="drama-eps"
-            >
-              BAIDU
             </Button>
           })}
         </div>
