@@ -51,7 +51,7 @@ export default function App() {
       <Layout className='app-wrapper'>
         <Header className='app-header'>
           <div className='app-header-details'>
-            <p>Qmaru - {version} / {title}</p>
+            <p>qmaru - {version} / {title}</p>
           </div>
 
         </Header>
