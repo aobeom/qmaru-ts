@@ -244,7 +244,7 @@ export default function Picture() {
 
       <div className='picture-search'>
         <Search
-          placeholder="URL"
+          placeholder="URL[?update]"
           style={{ maxWidth: 230 }}
           loading={searchLoading}
           onChange={(e) => MediaURLChange(e)}
