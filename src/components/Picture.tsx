@@ -159,7 +159,7 @@ export default function Picture() {
                 </Button>
               </div>
                 :
-                <video src={url} controls />}
+                <video className="picture-result-video" src={url} controls />}
             </div>
           )
         } else {

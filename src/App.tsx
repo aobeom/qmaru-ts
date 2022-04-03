@@ -13,7 +13,7 @@ import DramaIcon from '@ant-design/icons/VideoCameraFilled'
 import STIcon from '@ant-design/icons/YoutubeFilled'
 
 const { Header, Footer, Content } = Layout
-const version: string = "20220328"
+const version: string = "20220403"
 
 export default function App() {
   const [title, setTitle] = useState<string>("Picture")
