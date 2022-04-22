@@ -1,92 +1,150 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter, Navigate, Routes, Route, Link } from 'react-router-dom'
-import './App.less'
+import { useState, useMemo } from 'react'
 
-import { Layout, Menu } from 'antd'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import BottomNavigation from '@mui/material/BottomNavigation'
+import BottomNavigationAction from '@mui/material/BottomNavigationAction'
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto'
+import YouTubeIcon from '@mui/icons-material/YouTube'
+import red from '@mui/material/colors/red'
+import blue from '@mui/material/colors/blue'
+import purple from '@mui/material/colors/purple'
+import green from '@mui/material/colors/green'
 
 import Picture from './components/Picture'
-import Drama from './components/Drama'
 import Stchannel from './components/Stchannel'
+import NotFound from './components/NotFound'
 
-import PicIcon from '@ant-design/icons/PictureFilled'
-import DramaIcon from '@ant-design/icons/VideoCameraFilled'
-import STIcon from '@ant-design/icons/YoutubeFilled'
+import { BrowserRouter, Navigate, Routes, Route, Link } from "react-router-dom"
+import { SnackbarProvider } from 'notistack'
 
-const { Header, Footer, Content } = Layout
-const version: string = "20220403"
+import './global.ts'
 
-export default function App() {
-  const [title, setTitle] = useState<string>("Picture")
-  const [tabSelect, setTabSlect] = useState<string[]>(["/picture"])
-
-  const menus: any = [
-    { link: "/picture", icon: <PicIcon style={{ fontSize: "150%" }} /> },
-    { link: "/stchannel", icon: <STIcon style={{ fontSize: "150%" }} /> },
-    { link: "/drama", icon: <DramaIcon style={{ fontSize: "150%" }} /> },
-  ]
-  type Router = { path: string; Component: () => JSX.Element }
-  const routers: Router[] = [
-    { path: "/", Component: () => <Navigate to="/picture" /> },
-    { path: "/picture", Component: Picture },
-    { path: "/stchannel", Component: Stchannel },
-    { path: "/drama", Component: Drama },
-  ]
-
-  const menuClick = (e: any) => {
-    const key: string = e.key
-    const title: string = key.replace("/", "").toUpperCase()
-    setTabSlect([key])
-    setTitle(title)
+function App() {
+  // 设置导航下标
+  const [selectNav, setSelectNav] = useState('picture')
+  const navChange = (event: React.SyntheticEvent, newNav: string) => {
+    if (selectNav !== newNav) {
+      setSelectNav(newNav)
+    }
   }
-
-  useEffect(() => {
-    const pathname: string = window.location.pathname
-    const title: string = pathname.replace("/", "").toUpperCase()
-    setTabSlect([pathname])
-    setTitle(title)
-  }, [])
+  // 配置主题
+  const prefersDarkMode: boolean = useMediaQuery('(prefers-color-scheme: dark)')
+  var GlobalTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+          primary: {
+            main: prefersDarkMode ? purple[800] : purple[600],
+            contrastText: "#fff"
+          },
+          secondary: {
+            main: prefersDarkMode ? purple[600] : purple[400],
+            contrastText: "#fff"
+          },
+          success: {
+            main: prefersDarkMode ? green[800] : green[500],
+          },
+          info: {
+            main: prefersDarkMode ? blue[800] : blue[500],
+          },
+          error: {
+            main: prefersDarkMode ? red[800] : red[500],
+          },
+          contrastThreshold: 3,
+          tonalOffset: 0.2,
+        }
+      }),
+    [prefersDarkMode],
+  );
 
   return (
-    <BrowserRouter>
-      <Layout className='app-wrapper'>
-        <Header className='app-header'>
-          <div className='app-header-details'>
-            <p>qmaru - {version} / {title}</p>
-          </div>
+    <ThemeProvider theme={GlobalTheme}>
+      <SnackbarProvider maxSnack={3} dense>
+        <BrowserRouter>
+          <Container
+            key={"App-Wrapper"}
+            maxWidth={false}
+            disableGutters
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              height: "100vh"
+            }}>
 
-        </Header>
+            <Container
+              key={"App-Header"}
+              maxWidth={false}
+              disableGutters
+              sx={{ width: "100%" }}
+            >
+              <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                  <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                      <Typography variant="button" sx={{ paddingRight: 1 }}>qmaru</Typography>
+                      <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>v{window.dateVer}</Typography>
+                      <Typography variant="subtitle2">{window.commitVer}</Typography>
+                    </Toolbar>
+                  </Container>
+                </AppBar>
+              </Box>
+            </Container>
 
-        <Content className='app-content'>
-          <Routes>
-            {routers.map(({ path, Component }) => (
-              <Route
-                key={path}
-                path={path}
-                element={<Component />}
-              >
-              </Route>
-            ))}
-          </Routes>
-        </Content>
+            <Container
+              key={"App-Main"}
+              maxWidth={false}
+              disableGutters
+              sx={{
+                flex: 1,
+                width: "100%",
+                overflow: "auto",
+              }}>
+              <Routes>
+                <Route path="/" element={<Navigate to="/picture" replace />} />
+                <Route path="/picture" element={<Picture />} />
+                <Route path="/stchannel" element={<Stchannel />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Container>
 
-        <Footer className='app-footer'>
-          <Menu
-            theme="light"
-            className='app-footer-menu'
-            mode="horizontal"
-            selectedKeys={tabSelect}
-            onSelect={(e) => menuClick(e)}
-          >
-            {menus.map((menu: any) => {
-              return <Menu.Item key={menu.link}>
-                <Link to={menu.link} className='app-footer-menu-item'>
-                  {menu.icon}
-                </Link>
-              </Menu.Item>
-            })}
-          </Menu>
-        </Footer>
-      </Layout>
-    </BrowserRouter>
+            <Container
+              key={"App-Footer"}
+              maxWidth={false}
+              disableGutters
+              sx={{
+                width: "100%",
+                textAlign: "center",
+                paddingBottom: "env(safe-area-inset-bottom)"
+              }}
+            >
+              <BottomNavigation value={selectNav} onChange={navChange}>
+                <BottomNavigationAction
+                  component={Link}
+                  to="/picture"
+                  value="picture"
+                  icon={<InsertPhotoIcon />}
+                />
+                <BottomNavigationAction
+                  component={Link}
+                  to="/stchannel"
+                  value="stchannel"
+                  icon={<YouTubeIcon />}
+                />
+              </BottomNavigation>
+            </Container>
+          </Container>
+        </BrowserRouter >
+      </SnackbarProvider>
+    </ThemeProvider>
   )
 }
+
+export default App

@@ -13,9 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: update API url
+      - name: update API url and Version
         run: |
+          today=`date '+%y%m%d'`
+          stage=`echo ${GITHUB_SHA} | cut -b 1-7`
           sed -i "s#yourapiaddress#${{ secrets.API }}#g" src/global.ts
+          sed -i "s#YOURDATEVER#$today#g" src/global.ts
+          sed -i "s#YOURCOMMITVER#$stage#g" src/global.ts
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path

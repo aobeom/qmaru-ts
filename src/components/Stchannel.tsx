@@ -1,13 +1,22 @@
 import { useState, useEffect, useCallback } from 'react'
-import './STchannel.less'
-import '../global.ts'
 
-import { Statistic, Skeleton, Card, Space, Button } from 'antd'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardMedia from '@mui/material/CardMedia'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import Skeleton from '@mui/material/Skeleton'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+
 import LazyLoad from 'react-lazyload'
 
-const { Meta } = Card
+import '../global.ts'
 
-export default function Stchannel() {
+export default function STChannel() {
   const [stData, setStData] = useState<any>([])
   const [stStatus, setStStatus] = useState<boolean>(false)
   const [stLoading, setStLoading] = useState(true)
@@ -15,16 +24,11 @@ export default function Stchannel() {
 
   const STLoading = () => {
     return (
-      <Card
-        style={{ width: "100%", maxWidth: 600, marginTop: 16, margin: "0 auto" }}
-      >
-        <Skeleton active>
-          <Meta
-            title="Card title"
-            description="This is the description"
-          />
-        </Skeleton>
-      </Card>
+      <Box>
+        <Skeleton animation="pulse" variant="rectangular" height={200} />
+        <Skeleton animation="pulse" />
+        <Skeleton animation="pulse" width="60%" />
+      </Box>
     )
   }
 
@@ -69,52 +73,61 @@ export default function Stchannel() {
       const purl: string = data.purl
       const path: string = data.path
       stShow.push(
-        <div key={"st" + i} className='st-content-card'>
+        <Box key={"st" + i} sx={{ wordBreak: "break-all", padding: 1 }}>
           <LazyLoad
             height={200}
             offset={[-200, 0]}
+            debounce={500}
             once
-            scrollContainer=".app-content"
+            overflow
             placeholder={<STLoading />}
           >
-            <Card
-              cover={<img src={purl} alt={i} />}
-              actions={[
+            <Card>
+              <CardMedia
+                component="img"
+                image={purl}
+                alt={title}
+              />
+              <CardContent>
+                <Typography variant="subtitle2">
+                  {date}
+                </Typography>
+                <Typography variant="subtitle1" sx={{ textAlign: "left" }}>
+                  {title}
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
                 <Button
-                  type="primary"
+                  size="small"
+                  color="primary"
                   href={path}
                   target="_blank"
                   rel="noreferrer"
                   download
                 >
-                  OPEN
+                  view
                 </Button>
-              ]}
-            >
-              <Meta title={date} description={title} />
+              </CardActions>
             </Card>
           </LazyLoad>
-        </div>
+        </Box>
 
       )
     }
   }
   return (
-    <div>
-      <div className='st-countdown'>
-        <Statistic
-          title="UPDATE"
-          value={updateTime}
-          valueStyle={{ fontSize: 18 }}
+    <Container maxWidth="sm" sx={{ textAlign: "center" }}>
+      <Box sx={{ position: "relative", top: 30 }}>
+        <Chip
+          color="primary"
+          label={updateTime}
+          icon={<AccessTimeIcon />}
         />
-      </div>
+      </Box>
 
-      <div className='st-content'>
-        {stLoading ?
-          <STLoading /> :
-          <Space direction="vertical" size={15}>{stShow}</Space>
-        }
-      </div>
-    </div>
+      <Box sx={{ paddingTop: 6, maxWidth: 600 }}>
+        {stLoading ? <STLoading /> : <Box>{stShow}</Box>}
+      </Box>
+    </Container>
   )
 }
