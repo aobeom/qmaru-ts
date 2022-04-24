@@ -254,7 +254,7 @@ export default function Picture() {
                 :
                 <LazyLoad
                   height={200}
-                  offset={[-200, 0]}
+                  offset={[200, 0]}
                   debounce={500}
                   once
                   overflow
