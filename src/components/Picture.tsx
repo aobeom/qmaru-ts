@@ -18,6 +18,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import { useSnackbar } from 'notistack'
 import LazyLoad from 'react-lazyload'
+import { useLocation, useNavigate } from "react-router-dom"
 
 import '../global.ts'
 
@@ -37,6 +38,15 @@ const useStyles = makeStyles({
 })
 
 export default function Picture() {
+  // 路由
+  const location = useLocation()
+  const navigate = useNavigate()
+  const cleanSearch = useCallback(() => {
+    if (location.search !== "") {
+      navigate("/picture")
+    }
+  }, [location.search, navigate])
+
   const classes = useStyles()
   const [mediaLoading, setMediaLoading] = useState<boolean>(false)
   const [mediaAlive, setMediaAlive] = useState<any>([{ "name": "Check Server", "status": "info" }])
@@ -108,6 +118,7 @@ export default function Picture() {
     let requestURL: string = `${window.api}/api/v1/media${mediaType}?url=${encodeURIComponent(fetchURLNew)}`
 
     setMediaLoading(true)
+    cleanSearch()
 
     fetch(
       requestURL, {
@@ -143,7 +154,7 @@ export default function Picture() {
           setMediaLoading(false)
         }
       )
-  }, [enqueueSnackbar, mediaURL])
+  }, [enqueueSnackbar, mediaURL, cleanSearch])
 
   const PicStatus = useCallback(() => {
     const requesURL: string = `${window.api}/api/v1/media/status`
