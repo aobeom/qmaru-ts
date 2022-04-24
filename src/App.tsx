@@ -20,12 +20,12 @@ import Picture from './components/Picture'
 import Stchannel from './components/Stchannel'
 import NotFound from './components/NotFound'
 
-import { BrowserRouter, Navigate, Routes, Route, Link } from "react-router-dom"
+import { MemoryRouter, Navigate, Routes, Route, Link } from "react-router-dom"
 import { SnackbarProvider } from 'notistack'
 
 import './global.ts'
 
-function App() {
+function Navigation() {
   // 设置导航下标
   const [selectNav, setSelectNav] = useState('picture')
   const navChange = (event: React.SyntheticEvent, newNav: string) => {
@@ -33,6 +33,26 @@ function App() {
       setSelectNav(newNav)
     }
   }
+
+  return (
+    <BottomNavigation value={selectNav} onChange={navChange}>
+      <BottomNavigationAction
+        component={Link}
+        to="/picture"
+        value="picture"
+        icon={<InsertPhotoIcon />}
+      />
+      <BottomNavigationAction
+        component={Link}
+        to="/stchannel"
+        value="stchannel"
+        icon={<YouTubeIcon />}
+      />
+    </BottomNavigation>
+  )
+}
+
+function App() {
   // 配置主题
   const prefersDarkMode: boolean = useMediaQuery('(prefers-color-scheme: dark)')
   var GlobalTheme = useMemo(
@@ -62,12 +82,12 @@ function App() {
         }
       }),
     [prefersDarkMode],
-  );
+  )
 
   return (
     <ThemeProvider theme={GlobalTheme}>
       <SnackbarProvider maxSnack={3} dense>
-        <BrowserRouter>
+        <MemoryRouter>
           <Container
             key={"App-Wrapper"}
             maxWidth={false}
@@ -125,23 +145,10 @@ function App() {
                 paddingBottom: "env(safe-area-inset-bottom)"
               }}
             >
-              <BottomNavigation value={selectNav} onChange={navChange}>
-                <BottomNavigationAction
-                  component={Link}
-                  to="/picture"
-                  value="picture"
-                  icon={<InsertPhotoIcon />}
-                />
-                <BottomNavigationAction
-                  component={Link}
-                  to="/stchannel"
-                  value="stchannel"
-                  icon={<YouTubeIcon />}
-                />
-              </BottomNavigation>
+              <Navigation />
             </Container>
           </Container>
-        </BrowserRouter >
+        </MemoryRouter>
       </SnackbarProvider>
     </ThemeProvider>
   )
