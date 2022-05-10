@@ -33,7 +33,7 @@ export default function STChannel() {
   }
 
   const STFetch = useCallback(() => {
-    const requestURL: string = `${window.api}/api/v1/stchannel`
+    const requestURL: string = `${window.api}/api/web/stchannel`
     fetch(requestURL, {
       method: 'GET',
     }).then(res => res.json())

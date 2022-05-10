@@ -115,7 +115,7 @@ export default function Picture() {
 
     let fetchURLClear: string[] = fetchURL.split(" ")
     let fetchURLNew: string = fetchURLClear[fetchURLClear.length - 1]
-    let requestURL: string = `${window.api}/api/v1/media${mediaType}?url=${encodeURIComponent(fetchURLNew)}`
+    let requestURL: string = `${window.api}/api/web/media${mediaType}?url=${encodeURIComponent(fetchURLNew)}`
 
     setMediaLoading(true)
     cleanSearch()
@@ -157,7 +157,7 @@ export default function Picture() {
   }, [enqueueSnackbar, mediaURL, cleanSearch])
 
   const PicStatus = useCallback(() => {
-    const requesURL: string = `${window.api}/api/v1/media/status`
+    const requesURL: string = `${window.api}/api/web/media/status`
     fetch(requesURL, {
       method: 'GET',
     }).then(res => res.json())
