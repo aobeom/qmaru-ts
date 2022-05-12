@@ -59,4 +59,4 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            /bin/bash /usr/mycrond/update_web.sh
+            /bin/bash /usr/mycrond/update_qmeta_web.sh

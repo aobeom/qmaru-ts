@@ -120,7 +120,7 @@ function App() {
                 <AppBar position="static">
                   <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                      <Typography variant="button" sx={{ paddingRight: 1 }}>qmaru</Typography>
+                      <Typography variant="button" sx={{ paddingRight: 1 }}>qmeta</Typography>
                       <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>v{window.dateVer}</Typography>
                       <Typography variant="subtitle2">{window.commitVer}</Typography>
                     </Toolbar>
