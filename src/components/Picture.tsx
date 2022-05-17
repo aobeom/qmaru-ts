@@ -181,10 +181,16 @@ export default function Picture() {
         }
       })
       .catch(
-        () => { }
+        () => {
+          const msg: string = "Server Error"
+          window.messageDefault.variant = "error"
+          enqueueSnackbar(
+            msg,
+            window.messageDefault
+          )
+        }
       )
-    return () => { }
-  }, [])
+  }, [enqueueSnackbar])
 
   // 识别分享的内容
   const PicFromShare = useCallback(() => {
@@ -207,8 +213,11 @@ export default function Picture() {
 
   useEffect(() => {
     PicStatus()
+  }, [PicStatus])
+
+  useEffect(() => {
     PicFromShare()
-  }, [PicStatus, PicFromShare])
+  }, [PicFromShare])
 
   let mediaShow: any = []
   if (mediaStatus) {
